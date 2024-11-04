@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.poeei.tech.taskmanagement.mapper.TaskMapper" >
+	<resultMap id="taskResultMap" type="com.poeei.tech.taskmanagement.domain.task.Task">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="TITLE" jdbcType="NVARCHAR" property="title"/>
+		<result column="DESCRIPTION" jdbcType="NVARCHAR" property="description"/>
+		<result column="ASSIGNEE" jdbcType="NVARCHAR" property="assignee"/>
+		<result column="STATUS" jdbcType="NVARCHAR" property="status"/>
+		<result column="PRIORITY" jdbcType="NVARCHAR" property="priority"/> 
+		<result column="START_DATE" jdbcType="DATE" property="startDate"/>
+		<result column="END_DATE" jdbcType="DATE" property="endDate"/>
+	</resultMap>
+
+	<!-- Insert Task -->
+	<insert id="insertTask" parameterType="com.poeei.tech.taskmanagement.domain.task.Task" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO [TASK]
+			(TITLE, DESCRIPTION, ASSIGNEE, STATUS, PRIORITY, START_DATE, END_DATE)
+		VALUES (#{title}, #{description}, #{assignee}, #{status}, #{priority}, #{startDate}, #{endDate})
+	</insert>
+
+	 <sql id="allTaskList">
+        FROM [TASK]
+        <where>
+            <if test="id != null and id != ''">
+                AND [TASK].ID LIKE #{id}
+            </if>
+            <if test="title != null and title != ''">
+                AND [TASK].TITLE LIKE '%' + #{title} + '%'
+            </if>
+            <if test="status != null and status != ''">
+                AND [TASK].STATUS = #{status}
+            </if>
+            <if test="priority != null and priority != ''">
+                AND [TASK].PRIORITY = #{priority}
+            </if>
+        </where>
+    </sql>
+
+    <!-- Select All Tasks with Search Criteria -->
+    <select id="selectAllTask" parameterType="map" resultMap="taskResultMap">
+        SELECT
+            [TASK].ID AS ID,
+            [TASK].TITLE AS TITLE,
+            [TASK].DESCRIPTION AS DESCRIPTION,
+            [TASK].ASSIGNEE AS ASSIGNEE,
+            [TASK].STATUS AS STATUS,
+            [TASK].PRIORITY AS PRIORITY,
+            [TASK].START_DATE AS START_DATE,
+            [TASK].END_DATE AS END_DATE
+        <include refid="allTaskList" />
+        ORDER BY [TASK].ID
+    </select>
+
+	<!-- Select task By ID-->
+	<select id="selectTaskById" resultMap="taskResultMap">
+		SELECT
+			[TASK].ID AS ID,
+			[TASK].TITLE AS TITLE,
+			[TASK].DESCRIPTION AS DESCRIPTION,
+			[TASK].ASSIGNEE AS ASSIGNEE,
+			[TASK].STATUS AS STATUS,
+			[TASK].PRIORITY AS PRIORITY,
+			[TASK].START_DATE AS START_DATE,
+			[TASK].END_DATE AS END_DATE
+		FROM [TASK]
+		WHERE [TASK].ID = #{id}
+	</select>
+
+	<!-- Update task By Id -->
+	<update id="updateTaskById" parameterType="com.poeei.tech.taskmanagement.domain.task.Task">
+		UPDATE [TASK]
+		SET [TASK].TITLE = #{title},
+			[TASK].DESCRIPTION = #{description},
+			[TASK].ASSIGNEE = #{assignee},
+			[TASK].STATUS = #{status},
+			[TASK].PRIORITY = #{priority},
+			[TASK].START_DATE = #{startDate},
+			[TASK].END_DATE =#{endDate}
+		WHERE [TASK].ID = #{id}
+	</update>
+
+	<!-- Delete task by Id -->
+	<delete id="deleteTaskById" parameterType="int">
+    	DELETE FROM [TASK] WHERE [TASK].ID = #{id}
+	</delete>
+
+	<!-- Search task by Id -->
+	<sql id="columns" >
+		[TASK].ID AS ID,
+		[TASK].TITLE AS TITLE,
+		[TASK].DESCRIPTION AS DESCRIPTION,
+		[TASK].ASSIGNEE AS ASSIGNEE,
+		[TASK].STATUS AS STATUS,
+		[TASK].PRIORITY AS PRIORITY,
+		[TASK].START_DATE AS START_DATE,
+		[TASK].END_DATE AS END_DATE
+	</sql>
+	<sql id="from_and_where">
+		FROM [TASK]
+		<where>
+			<if test="title != '' and title != null">
+				AND [TASK].TITLE LIKE #{title}
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectByCriteria" resultMap="taskResultMap">
+		<if test="title != null">
+			<bind name="title" value="'%' + title + '%'" />
+		</if>
+		SELECT
+			[TASK].ID AS ID,
+            [TASK].TITLE AS TITLE,
+            [TASK].DESCRIPTION AS DESCRIPTION,
+            [TASK].ASSIGNEE AS ASSIGNEE,
+            [TASK].STATUS AS STATUS,
+            [TASK].PRIORITY AS PRIORITY,
+            [TASK].START_DATE AS START_DATE,
+            [TASK].END_DATE AS END_DATE
+		<include refid="from_and_where" />
+		ORDER BY [TASK].ID
+	</select>
+</mapper>

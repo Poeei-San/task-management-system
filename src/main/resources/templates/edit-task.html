@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Task Edition</title>
+	<link rel="icon" href="/image/task-icon.png" type="iamge/png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<header> 
+		Task Management System 
+	</header>
+	<div class="task-register-container">
+		<div class="task-register-form">
+			<div class="title">
+				<img th:src="@{/image/edit-icon.png}" alt="Update-icon" class="add-icon">Update the Task.
+			</div>
+
+			<form th:action="@{/task-management/update}" method="post" th:object="${task}">
+				<input type="hidden" id="id" name="id" th:value="${task.id}"/>
+				
+				<label for="task-name">Title</label> 
+				<input type="text" name="title" th:field="*{title}" autocomplete="off" required>
+
+				<label for="description">Description</label>
+				<textarea name="description" th:field="*{description}" rows="2" autocomplete="off" required></textarea>
+
+				<label for="assignee">Assignee</label> 
+				<input type="text" name="assignee" th:field="*{assignee}" autocomplete="off" required>
+
+				<div class="date-container">
+					<div class="date-item">
+						<label for="start-date">Start Date</label>
+						<input type="date" name="startDate" th:field="*{startDate}" required>
+					</div>
+					<div class="date-item">
+						<label for="end-date">End Date</label> 
+						<input type="date" name="endDate" th:field="*{endDate}" required>
+					</div>
+				</div>
+
+				<div class="choice-container">
+					<label for="priority">Task Priority</label>
+					<div class="choice-options">
+						<input type="radio" id="urgent" name="priority" th:value="Urgent" th:field="*{priority}" required> 
+						<label for="urgent">Urgent</label>
+
+						<input type="radio" id="important" name="priority" th:value="Important" th:field="*{priority}"> 
+						<label for="important">Important</label> 
+						
+						<input type="radio" id="medium" name="priority" th:value="Medium" th:field="*{priority}"> 
+						<label for="medium">Medium</label> 
+						
+						<input type="radio" id="low" name="priority" th:value="Low" th:field="*{priority}"> 
+						<label for="low">Low</label>
+					</div>
+				</div>
+
+				<div class="choice-container">
+					<label for="status">Task Status</label>
+					<div class="choice-options">
+						<input type="radio" id="urgent" name="status" th:value="In-Progress" th:field="*{status}"  required> 
+						<label for="urgent">In Progress</label>
+
+						<input type="radio" id="important" name="status" th:value="Pending" th:field="*{status}"> 
+						<label for="important">Pending</label>
+						
+						<input type="radio" id="medium" name="status" value="Complete" th:field="*{status}"> 
+						<label for="medium">Complete</label>
+					</div>
+				</div>
+
+				<button type="submit">Update Task</button>
+				
+				    <button class="back-button" onclick="window.location.href='/dashboard'">
+				        <i class="fa fa-arrow-left back-icon" aria-hidden="true"></i> Back
+				    </button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

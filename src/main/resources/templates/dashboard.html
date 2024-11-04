@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management System</title>
+  <link rel="shortcut icon" href="/image/task-icon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<header>
+		Task Management System
+	</header>
+
+	<div class="task-operation">
+		<a class="operation-btn" th:href="@{/task-management/search}"><img th:src="@{/image/search-icon.jfif}" alt="Search-icon" class="add-icon">Search Task</a>
+		<a class="operation-btn" th:href="@{/task-management/register}"><img th:src="@{/image/add-icon.png}" alt="Add-icon" class="add-icon">Add Task</a>
+	</div>
+
+	<div class="task-info-box" th:each="task : ${taskList}">
+	    <div class="task-summary">
+	        <span class="title-info" th:text="${task.title}"></span>
+	        <span class="status-priority">
+			    <span th:text="${task.status}" class="status"></span>
+			    <span th:text="${task.priority}" class="priority"></span>
+			</span>
+			        
+	        <div class="date-info">
+	        	<p> Timeline : </p>
+	            <p th:text="${#dates.format(task.startDate, 'dd-MM-yyyy')}"></p>
+	            <p> To </p>
+	            <p th:text="${#dates.format(task.endDate,'dd-MM-yyyy')}"></p>
+	        </div>
+
+	        <div class="icon-group">
+	            <a th:href="@{/task-management/edit/{id}(id=${task.id})}" class="icon edit-icon">
+	                <i class="fa-solid fa-marker"></i>
+	            </a>
+	            <a th:href="@{/task-management/delete/{id}(id=${task.id})}" class="icon delete-icon">
+	                <i class="fa-solid fa-trash"></i>
+	            </a>
+	            <a class="icon dropdown-btn" onclick="toggleDescBox(this)">
+	                <i class="fa-sharp fa-solid fa-caret-down"></i>
+	            </a>
+	        </div>
+	    </div>
+	    <div class="description-summary">
+	        <span class="section-title">Description</span>
+	        <p th:text="${task.description}"></p>
+
+	        <span class="section-title">Assignee</span>
+	        <p th:text="${task.assignee}"></p>
+	    </div>
+	</div>
+	<script th:src="@{/javascript/index.js}" type="text/javascript"></script>
+</body>
+</html>

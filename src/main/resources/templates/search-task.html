@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Task Searching</title>
+	<link rel="icon" href="/image/task-icon.png" type="iamge/png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<header>
+		Task Management System
+	</header>
+
+	<div class="task-list-container">
+		<form th:action="@{/task-management/search}" method="POST" th:object="${criteriaform}" class="task-search-form">
+			<div class="task-search-container">
+				<div class="task-user-box">
+					<label for="title">Task Title :</label>
+					<input type="search" class="input-field" name="title" th:field="*{title}" autocomplete="off">
+				</div>
+			</div>
+			<button type="submit" class="search-button">Search</button>
+		</form>
+
+		<div class="show-task-table result-table">
+			<table>
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Title</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Status</th>
+						<th>Priority</th>
+						<th>Assignee</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="task, iterStat : ${taskList}">
+						<td th:text="${iterStat.count}"></td>
+						<td th:text="${task.title}"></td>
+						<td th:text="${#dates.format(task.startDate, 'dd-MM-yyyy')}"></td>
+        				<td th:text="${#dates.format(task.endDate, 'dd-MM-yyyy')}"></td>
+						<td th:text="${task.status}"></td>
+						<td th:text="${task.priority}"></td>
+						<td th:text="${task.assignee}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<button class="back-button" onclick="window.location.href='/dashboard'">
+        <i class="fa fa-arrow-left back-icon" aria-hidden="true"></i> Back
+    </button>
+</body>
+</html>

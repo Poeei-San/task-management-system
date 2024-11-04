@@ -1,0 +1,109 @@
+/* Header Title */
+header {
+	width: 98%;
+	padding: 20px;
+	text-align: left;
+	color: white;
+	font-size: 1.4em;
+	font-weight: bold;
+	background: linear-gradient(to left, rgb(255, 196, 205), rgb(255, 177, 189), rgb(250, 134, 152), rgb(249, 87, 111), #e8374a);
+}
+
+	/* Task Registration Container */
+	.task-register-container {
+		display: flex;
+		flex-direction: row;
+		padding: 10px;
+		width: 50%;
+	}
+
+	.task-register-form {
+		width: 100%;
+		padding: 25px;
+		background-color: white;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		border-radius: 8px;
+	}
+	
+	.title {
+		display: flex;
+		align-items: center;
+		color: #484242;
+		font-size: 1.2em;
+		font-weight: bold;
+		border-bottom: 1px solid #e74a59;
+	}
+	
+	.add-icon {
+		width: 24px;
+		margin-right: 8px;
+	}
+
+	form label {
+	    display: block;
+	    margin: 10px 0 5px;
+	    color: #771b24;
+	    font-size: 14px;
+	  }
+
+	form input[type="text"], form input[type="date"], form textarea {
+		width: calc(100% - 24px);
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+
+	form .date-container {
+		display: flex;
+	}
+
+	.date-item {
+	    display: flex;
+	    flex-direction: column;
+	    flex: 1;
+	}
+
+	form .choice-container {
+		margin-top: 15px;
+	}
+
+	.choice-options {
+	    display: flex;
+	    gap: 15px;
+		padding-bottom: 20px;
+	}
+  
+	.choice-options input[type="radio"] {
+		margin-right: 5px;
+	}
+
+	form button {
+		width: 100%;
+		padding: 10px;
+		background: linear-gradient(to left, rgb(255, 196, 205), rgb(255, 177, 189), rgb(250, 134, 152), rgb(249, 87, 111), #e8374a);
+		border: none;
+		color: white;
+		font-size: 1em;
+		font-weight: bold;
+		cursor: pointer;
+		border-radius: 4px;
+	}
+
+	.back-button {
+	    display: flex;
+		justify-content: flex-end;
+	    align-items: center;
+	    background: none;
+	    border: none;
+	    color: #484242;
+	    font-size: 1em;
+	    font-weight: bold;
+	    cursor: pointer;
+	    padding: 10px;
+	    border-radius: 4px;
+	}
+
+	.back-icon {
+	    width: 20px;
+	    margin-right: 5px;
+	}
